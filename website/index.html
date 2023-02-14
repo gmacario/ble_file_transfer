@@ -58,7 +58,7 @@ connectButton.addEventListener('click', function(event) {
   transferFileButton.addEventListener('click', function(event) {
     msg('Trying to write file ...');
     // You'll want to replace this with the data you want to transfer.
-    let fileContents = prepareDummyFileContents(30 * 1024);
+    let fileContents = prepareDummyFileContents(1 * 1024);
     transferFile(fileContents);
   });
   cancelTransferButton.addEventListener('click', function(event) {
