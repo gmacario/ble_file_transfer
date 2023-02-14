@@ -21,7 +21,7 @@ limitations under the License.
 #include <ArduinoBLE.h>
 
 // Comment this macro back in to log received data to the serial UART.
-//#define ENABLE_LOGGING
+#define ENABLE_LOGGING
 
 // Forward declare the function that will be called when data has been delivered to us.
 void onBLEFileReceived(uint8_t* file_data, int file_length);
@@ -31,7 +31,7 @@ namespace {
 // Controls how large a file the board can receive. We double-buffer the files
 // as they come in, so you'll need twice this amount of RAM. The default is set
 // to 50KB.
-constexpr int32_t file_maximum_byte_count = (50 * 1024);
+constexpr int32_t file_maximum_byte_count = (2 * 1024);
 
 // Macro based on a master UUID that can be modified for each characteristic.
 #define FILE_TRANSFER_UUID(val) ("bf88b656-" val "-4a61-86e0-769c741026c0")
@@ -353,6 +353,12 @@ void setup() {
   // Start serial
   Serial.begin(9600);
   Serial.println("Started");
+
+  // BLE initialization
+  if (!BLE.begin()) {
+    Serial.println("ERROR: failed to initialize BLE!");
+    while (1);
+  }
 
   setupBLEFileTransfer();
 }
